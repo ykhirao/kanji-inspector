@@ -2,8 +2,8 @@
 
 UnihanデータをTypeScript型・定数としてnpmパッケージ化したライブラリです。
 
-[npm - kanji-inspector](https://www.npmjs.com/package/kanji-inspector)
-[GitHub - kanji-inspector](https://github.com/ykhirao/kanji-inspector)
+* [npm - kanji-inspector](https://www.npmjs.com/package/kanji-inspector)
+* [GitHub - kanji-inspector](https://github.com/ykhirao/kanji-inspector)
 
 ## 特徴
 - [Unihan](https://www.unicode.org/charts/unihan.html) の主要テキストファイルを自動パースし、型・データとして利用可能

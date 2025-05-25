@@ -4,6 +4,16 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "type": "module",
+  "description": "UnihanデータをTypeScript型・定数としてnpmパッケージ化したライブラリです。",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ykhirao/kanji-inspector.git"
+  },
+  "homepage": "https://github.com/ykhirao/kanji-inspector#readme",
+  "bugs": {
+    "url": "https://github.com/ykhirao/kanji-inspector/issues"
+  },
+  "author": "yk",
   "scripts": {
     "download": "ts-node scripts/download.ts",
     "treat": "ts-node scripts/treat.ts",
