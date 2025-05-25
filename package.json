@@ -1,12 +1,9 @@
 {
   "name": "kanji-inspector",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "type": "module",
-  "files": [
-    "dist"
-  ],
   "scripts": {
     "download": "ts-node scripts/download.ts",
     "treat": "ts-node scripts/treat.ts",
@@ -16,6 +13,9 @@
     "publish": "npm run build && npm run minify && npm publish --access public",
     "test": "echo 'no test yet'"
   },
+  "dependencies": {
+    "unzipper": "^0.12.3"
+  },
   "devDependencies": {
     "@types/node": "^22.15.21",
     "@types/unzipper": "^0.10.11",
@@ -23,8 +23,26 @@
     "ts-node": "^10.9.2",
     "typescript": "^5.4.5"
   },
+  "files": [
+    "dist"
+  ],
   "license": "MIT",
-  "dependencies": {
-    "unzipper": "^0.12.3"
-  }
+  "keywords": [
+    "Unihan",
+    "Kanji",
+    "Strokes",
+    "unicode",
+    "TypeScript",
+    "modules",
+    "unicode codepoint",
+    "kanji inspector",
+    "kanji dictionary",
+    "kanji metadata",
+    "kanji strokes count data set for TypeScript modules",
+    "型安全な漢字辞書",
+    "漢字情報データセット",
+    "漢字メタデータ",
+    "漢字辞書ライブラリ",
+    "漢字リファレンス"
+  ]
 }

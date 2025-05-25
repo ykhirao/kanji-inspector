@@ -52,21 +52,6 @@ export type CodepointType =
   ... // すべてのU+xxxx
 ```
 
-## キーワード
-
-- Unihan
-- Kanji
-- Strokes
-- Unicode
-- TypeScript
-- modules
-- Unicode Codepoint
-- 型安全な漢字辞書
-- 漢字情報データセット
-- 漢字メタデータ
-- 漢字辞書ライブラリ
-- 漢字リファレンス
-
 ## ライセンス
 
 このライブラリは [MIT License](./LICENSE) のもとで公開されています。
