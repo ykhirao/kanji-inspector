@@ -1,5 +1,0 @@
-# kanji-inspector/scripts
-
-## Usage
-
-

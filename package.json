@@ -1,6 +1,6 @@
 {
   "name": "kanji-inspector",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "type": "module",
@@ -12,6 +12,7 @@
     "treat": "ts-node scripts/treat.ts",
     "build": "tsc",
     "minify": " esbuild dist/data/*.js --minify --outdir=dist/data/ --allow-overwrite",
+    "patch": "npm version patch",
     "publish": "npm run build && npm run minify && npm publish --access public",
     "test": "echo 'no test yet'"
   },
