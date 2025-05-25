@@ -1,0 +1,29 @@
+{
+  "name": "kanji-inspector",
+  "version": "0.1.2",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "download": "ts-node scripts/download.ts",
+    "treat": "ts-node scripts/treat.ts",
+    "build": "tsc",
+    "minify": " esbuild dist/data/*.js --minify --outdir=dist/data/ --allow-overwrite",
+    "publish": "npm run build && npm run minify && npm publish --access public",
+    "test": "echo 'no test yet'"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.21",
+    "@types/unzipper": "^0.10.11",
+    "esbuild": "^0.25.4",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.5"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "unzipper": "^0.12.3"
+  }
+}

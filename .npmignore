@@ -1,0 +1,8 @@
+src/
+test/
+*.log
+*.test.ts
+*.spec.ts
+.gitignore
+README.md
+LICENSE
