@@ -8,3 +8,4 @@ export * from './data/OtherMappings';
 export * from './data/RadicalStrokeCounts';
 export * from './data/Readings';
 export * from './data/Variants';
+export * from './converter';

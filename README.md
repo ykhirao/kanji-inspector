@@ -14,8 +14,8 @@ UnihanデータをTypeScript型・定数としてnpmパッケージ化したラ�
 
 ## インストール
 
-```
-npm install kanji-inspector
+```bash
+$ npm install kanji-inspector
 ```
 
 ## 型情報・エクスポート例
