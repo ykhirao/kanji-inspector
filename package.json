@@ -28,21 +28,19 @@
   ],
   "license": "MIT",
   "keywords": [
-    "Unihan",
+    "count data set for TypeScript modules",
+    "kanji dictionary",
+    "kanji inspector",
+    "kanji metadata",
+    "kanji strokes count",
+    "kanji strokes",
     "Kanji",
     "Strokes",
-    "unicode",
     "TypeScript",
-    "modules",
-    "unicode codepoint",
-    "kanji inspector",
-    "kanji dictionary",
-    "kanji metadata",
-    "kanji strokes count data set for TypeScript modules",
-    "型安全な漢字辞書",
-    "漢字情報データセット",
-    "漢字メタデータ",
-    "漢字辞書ライブラリ",
-    "漢字リファレンス"
+    "Unicode Codepoint",
+    "Unicode",
+    "Unihan",
+    "漢字",
+    "漢字辞書"
   ]
 }
