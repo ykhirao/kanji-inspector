@@ -1,6 +1,6 @@
 {
   "name": "kanji-inspector",
-  "version": "0.2.18",
+  "version": "0.2.19",
   "main": "./dist/src/index.js",
   "module": "./dist/src/index.js",
   "types": "./dist/src/index.d.ts",
