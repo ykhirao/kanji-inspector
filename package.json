@@ -16,7 +16,7 @@
   },
   "author": "yk",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && cp -r src/db dist/src/",
     "check": "tsc --noEmit",
     "db:gen": "tsx scripts/createDb.ts",
     "deploy": "npm run build && npm publish --access public",
