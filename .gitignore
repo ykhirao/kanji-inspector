@@ -44,3 +44,11 @@ dist/
 *.log
 .env
 .DS_Store
+
+# db
+db/
+src/db/
+
+kanji-inspector-*.tgz
+local-test-project/
+test-project/

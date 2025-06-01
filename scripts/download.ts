@@ -5,20 +5,15 @@
 import fs from "fs";
 import path from "path";
 import unzipper from "unzipper";
-import { fileURLToPath } from "url";
+import readline from "readline";
 
 const UNIHAN_URL = "https://www.unicode.org/Public/UCD/latest/ucd/Unihan.zip";
+const AFFIRMATIVE_INPUTS = ['y', 'ｙ'];
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const DATA_DIR = path.join(__dirname, "data");
+const DATA_DIR = path.join(process.cwd(), "data");
 const ZIP_PATH = path.join(DATA_DIR, "Unihan.zip");
 const EXTRACT_PATH = path.join(DATA_DIR, "unihan");
-const META_PATH = path.join(__dirname, "../.unihan-meta.json");
-
-function getForceFlag() {
-  return process.argv.includes("-f") || process.argv.includes("--force");
-}
+const META_PATH = path.join(process.cwd(), ".unihan-meta.json");
 
 function readMeta() {
   if (!fs.existsSync(META_PATH)) return null;
@@ -29,7 +24,7 @@ function readMeta() {
   }
 }
 
-async function downloadUnihan(force = false) {
+async function downloadUnihan() {
   console.log("ダウンロード開始");
 
   const res = await fetch(UNIHAN_URL);
@@ -39,14 +34,29 @@ async function downloadUnihan(force = false) {
   if (!res.ok) throw new Error(`Failed to download: ${res.statusText}`);
   const meta = readMeta();
 
-  if (!force && meta && meta.lastModified && lastModified) {
+  if (meta && meta.lastModified && lastModified) {
     const lastModNew = new Date(lastModified).toISOString();
     if (meta.lastModified === lastModNew) {
       console.log(
-        "最終更新日が同じなのでダウンロード・解凍をスキップします:",
+        "最終更新日が同じです:",
         lastModNew
       );
-      process.exit(0);
+      const rl = readline.createInterface({
+        input: process.stdin,
+        output: process.stdout
+      });
+
+      const answer = await new Promise<string>((resolve) => {
+        rl.question('ダウンロードを続けますか？ (y/N): ', resolve);
+      });
+      rl.close();
+
+      if (AFFIRMATIVE_INPUTS.includes(answer.toLowerCase())) {
+        console.log('選択: 続行します');
+      } else {
+        console.log('選択: スキップします');
+        return;
+      }
     }
   }
 
@@ -62,30 +72,71 @@ async function downloadUnihan(force = false) {
     lastModified: lastModified ? new Date(lastModified).toISOString() : null,
     sourceUrl: UNIHAN_URL,
   };
-  fs.writeFileSync(META_PATH, JSON.stringify(metaObj), "utf-8");
+  fs.writeFileSync(META_PATH, JSON.stringify(metaObj, null, 4), "utf-8");
   console.log("メタ情報を書き込み完了:", META_PATH);
 }
 
-async function unzipUnihan(force = false) {
+async function unzipUnihan() {
   if (fs.existsSync(EXTRACT_PATH)) {
     console.log("既に解凍済み:", EXTRACT_PATH);
-    if (!force) return;
-    // 強制上書きの場合は一度削除
-    fs.rmSync(EXTRACT_PATH, { recursive: true, force: true });
+    const rl = readline.createInterface({
+      input: process.stdin,
+      output: process.stdout
+    });
+
+    const answer = await new Promise<string>((resolve) => {
+      rl.question('上書きしますか？ (y/N): ', resolve);
+    });
+    rl.close();
+
+    if (AFFIRMATIVE_INPUTS.includes(answer.toLowerCase())) {
+      console.log('選択: 上書きします');
+      // フォルダの中身を全て削除
+      const files = fs.readdirSync(EXTRACT_PATH);
+      for (const file of files) {
+        const filePath = path.join(EXTRACT_PATH, file);
+        fs.rmSync(filePath, { recursive: true, force: true });
   }
+      console.log('既存のファイルを削除しました。');
+    } else {
+      console.log('選択: スキップします');
+      return;
+    }
+  }
+
+  // 一時ディレクトリに解凍
+  const tempDir = path.join(DATA_DIR, 'temp');
+  console.log('一時ディレクトリを作成:', tempDir);
+  fs.mkdirSync(tempDir, { recursive: true });
+
+  console.log('ZIPファイルを解凍中...');
   await fs
     .createReadStream(ZIP_PATH)
-    .pipe(unzipper.Extract({ path: EXTRACT_PATH }))
+    .pipe(unzipper.Extract({ path: tempDir }))
     .promise();
+  console.log('ZIPファイルの解凍が完了しました');
+
+  // ファイル名を変更して移動
+  console.log('ファイル名の変更と移動を開始...');
+  const files = fs.readdirSync(tempDir);
+  for (const file of files) {
+    const newName = file.replace(/^Unihan_/, '');
+    if (newName !== file) {
+      console.log(`ファイル名を変更: ${file} -> ${newName}`);
+    }
+    fs.renameSync(
+      path.join(tempDir, file),
+      path.join(EXTRACT_PATH, newName)
+    );
+  }
+  console.log('全てのファイルの移動が完了しました');
+
+  // 一時ディレクトリを削除
+  console.log('一時ディレクトリを削除中...');
+  fs.rmSync(tempDir, { recursive: true, force: true });
+  console.log('一時ディレクトリを削除しました');
   console.log("解凍完了:", EXTRACT_PATH);
 }
 
-/**
- * npx ts-node scripts/download.ts         # 通常は差分がなければスキップ
- * npx ts-node scripts/download.ts -f      # 強制ダウンロード
- */
-(async () => {
-  const force = getForceFlag();
-  await downloadUnihan(force);
-  await unzipUnihan(force);
-})();
+await downloadUnihan();
+await unzipUnihan();

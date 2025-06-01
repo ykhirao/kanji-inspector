@@ -2,13 +2,18 @@
   "compilerOptions": {
     "declaration": true,
     "esModuleInterop": true,
-    "module": "esnext",
+    "module": "es2022",
     "outDir": "dist",
-    "rootDir": "src",
+    "rootDir": ".",
     "skipLibCheck": true,
     "strict": true,
-    "target": "ES2020"
+    "target": "ES2022",
+    "baseUrl": ".",
+    "paths": {
+      "@common/*": ["common/*"],
+      "@scripts/*": ["scripts/*"]
+    }
   },
-  "include": ["src", "src/index.ts"],
-  "exclude": ["test", "dist", "node_modules"]
+  "include": ["src", "common"],
+  "exclude": ["dist", "node_modules", "scripts", "tests"]
 }

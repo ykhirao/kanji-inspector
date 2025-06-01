@@ -1,10 +1,11 @@
 {
   "name": "kanji-inspector",
-  "version": "0.1.6",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "version": "0.2.18",
+  "main": "./dist/src/index.js",
+  "module": "./dist/src/index.js",
+  "types": "./dist/src/index.d.ts",
   "type": "module",
-  "description": "UnihanデータをTypeScript型・定数としてnpmパッケージ化したライブラリです。",
+  "description": "A TypeScript library that provides Unihan data as type-safe constants for Kanji and CJK ideographs.",
   "repository": {
     "type": "git",
     "url": "https://github.com/ykhirao/kanji-inspector.git"
@@ -15,45 +16,83 @@
   },
   "author": "yk",
   "scripts": {
-    "download": "ts-node scripts/download.ts",
-    "treat": "ts-node scripts/treat.ts",
     "build": "tsc",
-    "minify": " esbuild dist/data/*.js --minify --outdir=dist/data/ --allow-overwrite",
+    "check": "tsc --noEmit",
+    "db:gen": "tsx scripts/createDb.ts",
+    "deploy": "npm run build && npm publish --access public",
+    "download": "tsx scripts/download.ts",
+    "gen": "tsx scripts/gen.ts",
+    "local:test": "npm run build && npm pack && npx tsx test-package.ts",
     "patch": "npm version patch",
-    "publish": "npm run build && npm run minify && npm publish --access public",
-    "test": "jest"
+    "setup:clean": "rm -rf data/json/* data/ts/* dist/* db/* && npm run setup",
+    "setup": "npm run download && npm run gen && npm run db:gen && npm run build",
+    "test": "tsx tests/run.ts"
   },
   "dependencies": {
-    "unzipper": "^0.12.3"
+    "sqlite3": "^5.1.7"
   },
   "devDependencies": {
-    "@types/jest": "^29.5.14",
     "@types/node": "^22.15.21",
+    "@types/pluralize": "^0.0.33",
+    "@types/sqlite3": "^3.1.11",
     "@types/unzipper": "^0.10.11",
     "esbuild": "^0.25.4",
-    "jest": "^29.7.0",
-    "ts-jest": "^29.3.4",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.4.5"
+    "pluralize": "^8.0.0",
+    "tsx": "^4.19.4",
+    "typescript": "^5.4.5",
+    "unzipper": "^0.12.3"
   },
   "files": [
     "dist"
   ],
   "license": "MIT",
   "keywords": [
-    "count data set for TypeScript modules",
-    "kanji dictionary",
-    "kanji inspector",
-    "kanji metadata",
-    "kanji strokes count",
-    "kanji strokes",
-    "Kanji",
-    "Strokes",
-    "TypeScript",
-    "Unicode Codepoint",
-    "Unicode",
-    "Unihan",
+    "kanji",
+    "kanji-dictionary",
+    "kanji-database",
+    "kanji-metadata",
+    "kanji-info",
+    "kanji-details",
+    "kanji-lookup",
+    "kanji-search",
+    "kanji-stroke-count",
+    "kanji-strokes",
+    "kanji-radical",
+    "kanji-reading",
+    "kanji-variant",
+    "kanji-structure",
+    "kanji-unicode",
+    "kanji-codepoint",
+    "kanji-typescript",
+    "kanji-sqlite",
+    "kanji-json",
+    "kanji-api",
+    "unicode-kanji",
+    "unicode-cjk",
+    "unicode-character",
+    "unicode-database",
+    "cjk",
+    "cjk-character",
+    "cjk-unihan",
+    "unihan",
+    "ideograph",
+    "chinese-character",
+    "japanese-character",
+    "korean-character",
+    "hanzi",
+    "hanja",
     "漢字",
-    "漢字辞書"
-  ]
+    "漢字データベース",
+    "漢字辞書",
+    "日本語",
+    "中国語",
+    "韓国語"
+  ],
+  "exports": {
+    ".": {
+      "import": "./dist/src/index.js",
+      "require": "./dist/src/index.js",
+      "types": "./dist/src/index.d.ts"
+    }
+  }
 }
